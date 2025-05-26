@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Loan Predictor</title>
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background: linear-gradient(120deg, #f0f8ff, #e6f7ff);
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #007bff;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header .logo {
+            width: 50px;
+            margin-bottom: 10px;
+        }
+
+        .main {
+            padding: 20px;
+        }
+
+        .form-section {
+            max-width: 600px;
+            margin: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .form-group {
+            margin: 15px 0;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 10px 20px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #007bff;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            font-size: 25px;
+            line-height: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .fab:hover {
+            background-color: #0056b3;
+        }
+
+        /* Loader */
+        .loader {
+            display: none;
+            margin: 20px auto;
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid #007bff;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Progress Indicator */
+        .progress-bar {
+            display: none;
+            height: 5px;
+            background-color: #007bff;
+            margin-top: 10px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-bar span {
+            display: block;
+            height: 100%;
+            width: 0%;
+            background-color: #0056b3;
+            transition: width 0.5s ease;
+        }
+
+        /* Dark Mode */
+        body.dark {
+            background: linear-gradient(120deg, #1e1e1e, #121212);
+            color: white;
+        }
+
+        body.dark .form-section {
+            background: #333;
+        }
+
+        body.dark input, body.dark button {
+            background: #444;
+            color: white;
+        }
+
+        body.dark .progress-bar span {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>FutureBank Loan Predictor</h1>
+    </header>
+    <main class="main">
+        <section class="form-section">
+            <h2>Check Your Loan Eligibility</h2>
+            <form id="loanForm">
+                <!-- Form Fields -->
+                <div class="form-group">
+                    <label for="Gender">Gender (1=Male, 0=Female):</label>
+                    <input type="number" id="Gender" name="Gender" required placeholder="Enter 1 for Male or 0 for Female">
+                </div>
+                <div class="form-group">
+                    <label for="Married">Married (1=Yes, 0=No):</label>
+                    <input type="number" id="Married" name="Married" required>
+                </div>
+                <div class="form-group">
+                    <label for="Dependents">Dependents:</label>
+                    <input type="number" id="Dependents" name="Dependents" required>
+                </div>
+                <div class="form-group">
+                    <label for="Education">Education (1=Graduate, 0=Not Graduate):</label>
+                    <input type="number" id="Education" name="Education" required>
+                </div>
+                <div class="form-group">
+                    <label for="Self_Employed">Self Employed (1=Yes, 0=No):</label>
+                    <input type="number" id="Self_Employed" name="Self_Employed" required>
+                </div>
+                <div class="form-group">
+                    <label for="Credit_History">Credit History (1.0=Good, 0.0=Bad):</label>
+                    <input type="number" id="Credit_History" name="Credit_History" step="0.1" required>
+                </div>
+                <div class="form-group">
+                    <label for="Property_Area">Property Area (2=Urban, 1=Semiurban, 0=Rural):</label>
+                    <input type="number" id="Property_Area" name="Property_Area" required>
+                </div>
+                <div class="form-group">
+                    <label for="ApplicantIncomeLog">Applicant Income Log:</label>
+                    <input type="number" id="ApplicantIncomeLog" name="ApplicantIncomeLog" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="LoanAmountLog">Loan Amount Log:</label>
+                    <input type="number" id="LoanAmountLog" name="LoanAmountLog" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="Loan_Amount_Term_Log">Loan Amount Term Log:</label>
+                    <input type="number" id="Loan_Amount_Term_Log" name="Loan_Amount_Term_Log" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="Total_Income_Log">Total Income Log:</label>
+                    <input type="number" id="Total_Income_Log" name="Total_Income_Log" step="0.01" required>
+                </div>
+                <!-- Add more fields similarly -->
+                <button type="button" onclick="submitForm()">Predict</button>
+                <div class="progress-bar" id="progressBar">
+                    <span></span>
+                </div>
+            </form>
+            <div class="loader" id="loader"></div>
+            <p id="result" class="result"></p>
+        </section>
+    </main>
+    <footer>
+        <p>© 2024 FutureBank. All Rights Reserved.</p>
+    </footer>
+    <div class="fab" onclick="toggleTheme()">☀️</div>
+
+    <script>
+        // Dark Mode Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark');
+            document.querySelector('.fab').textContent =
+                document.body.classList.contains('dark') ? '🌙' : '☀️';
+        }
+
+        // Submit Form and Show Loader
+        async function submitForm() {
+            const form = document.getElementById('loanForm');
+            const formData = new FormData(form);
+            const jsonData = Object.fromEntries(formData.entries());
+
+            // Convert to numbers for correct processing
+            for (let key in jsonData) {
+                jsonData[key] = parseFloat(jsonData[key]);
+            }
+
+            const loader = document.getElementById('loader');
+            const progressBar = document.getElementById('progressBar');
+            const resultElement = document.getElementById('result');
+
+            // Show loader and progress bar
+            loader.style.display = 'block';
+            progressBar.style.display = 'block';
+            progressBar.querySelector('span').style.width = '50%'; // Starting progress
+
+            try {
+                // Sending the form data to the backend
+                const response = await fetch('http://127.0.0.1:5000/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify([jsonData])
+                });
+
+                // Updating the progress bar
+                progressBar.querySelector('span').style.width = '100%'; // Completed progress
+
+                // Handle the response
+                if (response.ok) {
+                    const result = await response.json();
+                    // Display prediction result
+                    resultElement.textContent = `Prediction: ${result.predictions[0] === 1 ? 'Approved' : 'Not Approved'}`;
+                } else {
+                    const result = await response.json();
+                    resultElement.textContent = `Error: ${result.error || 'Unable to fetch prediction.'}`;
+                }
+            } catch (err) {
+                resultElement.textContent = 'Error: Unable to fetch prediction.';
+            } finally {
+                // Hide loader and reset progress bar after the response
+                loader.style.display = 'none';
+                progressBar.querySelector('span').style.width = '0%';
+            }
+        }
+    </script>
+</body>
+</html>
