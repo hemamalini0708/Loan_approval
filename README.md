@@ -1,5 +1,7 @@
-**loan-Approval**
-Demo: https://www.loom.com/share/25a865352e8f4e87828f840913037848?sid=88df0d77-b12f-445b-a2ce-7445b21f439c
+**Loan-Approval**
+--
+
+**Demo**: https://www.loom.com/share/25a865352e8f4e87828f840913037848?sid=88df0d77-b12f-445b-a2ce-7445b21f439c
 
 **Content**:
 
@@ -12,3 +14,9 @@ How It Works:
 **Analysis**: The system processes this data using predefined criteria to determine loan eligibility.
 
 **Prediction**: Based on the analysis, the system predicts if the loan will be approved or not approved.
+
+👨‍💻 **Author**
+
+**Hema Malini Gangumalla**
+
+**Contact :-** hemamalinig07@gmail.com
